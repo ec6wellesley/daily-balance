@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e4e9d9">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Daily Balance">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Daily Balance</title>
+<style>
+:root{--cream:#f6f5ec;--sage:#e4e9d9;--sage2:#e9ebdd;--green:#344733;--muted:#65775a;--line:#d8dece;--white:#fff;--clay:#8a6b60;--shadow:0 10px 30px rgba(52,71,51,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--green);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:14px;padding:12px 15px;background:var(--green);color:white;font-weight:650}button.secondary{background:transparent;color:var(--green);border:1px solid var(--line)}button.small{padding:7px 10px;font-size:.84rem;border-radius:10px}.app{max-width:760px;margin:auto;padding:14px 14px calc(28px + env(safe-area-inset-bottom))}.hero{background:var(--sage);border-radius:24px;padding:20px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.logo{height:46px;width:46px;border-radius:15px;background:#65775a;color:white;display:grid;place-items:center;font-size:25px}.brand h1{font-size:1.38rem;margin:0;letter-spacing:-.04em}.eyebrow{font-size:.68rem;letter-spacing:.11em;color:var(--muted);font-weight:750}.hero-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px}.hero-bottom h2{font-size:1.22rem;margin:3px 0 0}.chip{background:var(--cream);border-radius:15px;padding:10px 12px;text-align:center;font-size:.8rem;color:var(--muted)}.section{margin:18px 0}.section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.section-title h2{font-size:1.08rem;margin:0;letter-spacing:-.02em}.muted{color:var(--muted)}.tiny{font-size:.78rem}.card{background:var(--white);border-radius:20px;padding:16px;box-shadow:var(--shadow)}.intake-num{font-size:2.5rem;font-weight:750;letter-spacing:-.055em}.progress{height:8px;background:#e1e3d6;border-radius:99px;overflow:hidden;margin:9px 0}.progress span{height:100%;display:block;background:#788c6b;border-radius:99px;width:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metric .symbol{font-size:1.35rem}.metric .label{font-size:.84rem;color:var(--muted);margin-top:7px}.metric .num{font-size:1.55rem;font-weight:750;letter-spacing:-.035em}.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}.field label{font-size:.83rem;color:var(--muted);font-weight:650}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;color:var(--green);outline-color:#788c6b}.field textarea{resize:vertical;min-height:76px}.row{display:flex;align-items:center;gap:8px}.row>*{min-width:0}.row .grow{flex:1}.balance-number{font-size:2rem;font-weight:750;letter-spacing:-.045em}.notice{background:var(--sage2);padding:12px;border-radius:14px;color:var(--muted);font-size:.83rem}.food-item{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #edf0e8}.food-item:last-child{border-bottom:0}.food-icon{height:38px;width:38px;border-radius:12px;background:var(--sage2);display:grid;place-items:center;flex-shrink:0}.food-info{flex:1;overflow-wrap:anywhere}.food-info strong{display:block;font-size:.91rem}.food-info small{color:var(--muted)}.food-kcal{text-align:right;font-weight:700;white-space:nowrap}.food-kcal button{display:block;margin:4px 0 0 auto}.tabbar{display:flex;gap:8px;margin:18px 0}.tabbar button{flex:1}.tabbar button.active{background:var(--green);color:#fff}.tabbar button:not(.active){background:transparent;color:var(--green);border:1px solid var(--line)}.hidden{display:none!important}.weight-list{display:flex;flex-direction:column;gap:8px}.weight-row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0}.footer{text-align:center;color:var(--muted);font-size:.75rem;padding:18px 0 4px}.status{min-height:1.2em;color:var(--muted);font-size:.82rem}.empty{text-align:center;background:var(--sage2);border-radius:15px;padding:20px;color:var(--muted)}.empty strong{display:block;color:var(--green);margin-bottom:4px}
+@media(min-width:620px){.app{padding:24px}.hero{padding:25px}.grid.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hero">
+    <div class="brand"><div class="logo">✿</div><div><h1>daily balance</h1><div class="eyebrow">YOUR PERSONAL WELLNESS JOURNAL</div></div></div>
+    <div class="hero-bottom"><div><div class="muted tiny">A little progress, every day</div><h2>Small steps count.</h2></div><div class="chip">🌿<br>Day by day</div></div>
+  </header>
+
+  <main id="todayView">
+    <section class="section">
+      <div class="section-title"><h2>Today's calorie intake</h2><span class="muted tiny" id="todayDate"></span></div>
+      <div class="card">
+        <div><span class="intake-num" id="intakeTotal">0</span> <span class="muted">kcal logged</span></div>
+        <div class="progress"><span id="intakeBar"></span></div>
+        <div class="muted tiny">Food estimates are approximate, not a prescribed calorie target.</div>
+      </div>
+    </section>
+
+    <section class="section grid metrics">
+      <div class="card metric"><div class="symbol">👣</div><div class="label">Steps today</div><div class="num" id="stepsDisplay">0</div><div class="field"><label for="stepsInput">Enter steps</label><input id="stepsInput" type="number" min="0" inputmode="numeric" placeholder="e.g. 6500"></div><div class="tiny muted" id="healthStatus">Apple Health not connected</div></div>
+      <div class="card metric"><div class="symbol">♡</div><div class="label">Exercise</div><div class="num"><span id="exerciseDisplay">0</span> <span class="tiny">kcal</span></div><div class="field"><label for="exerciseInput">Active calories</label><input id="exerciseInput" type="number" min="0" inputmode="numeric" placeholder="e.g. 180"></div><div class="tiny muted">Avoid counting the same activity twice.</div></div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Your estimated balance</h2><button class="small secondary" id="settingsToggle" type="button">⚙ Settings</button></div>
+      <div class="card">
+        <div class="row" style="align-items:baseline;flex-wrap:wrap"><div class="balance-number" id="balanceNumber">0</div><div class="muted tiny" id="balanceLabel">kcal difference</div></div>
+        <div class="muted tiny" id="burnLine">Estimated total burn: 1,800 kcal</div>
+        <div id="settingsPanel" class="hidden">
+          <div class="field"><label for="baselineInput">Estimated baseline daily burn (kcal)</label><input id="baselineInput" type="number" min="0" inputmode="numeric" value="1800"></div>
+          <p class="tiny muted">This is a placeholder for energy used before separately tracked activity. Personalize it with an appropriate estimate; this app does not calculate medical or nutrition advice.</p>
+        </div>
+        <div class="notice" style="margin-top:12px">ⓘ Estimates are uncertain. The calorie balance is not a prediction of weight change. Steps and exercise can overlap, and actual energy needs vary.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Food diary</h2><span class="muted tiny" id="foodCount">0 items</span></div>
+      <div class="card">
+        <h3 style="margin:0 0 6px;font-size:1rem">Quick food search</h3>
+        <div class="field"><label for="foodSearch">Choose a common food</label><select id="foodSearch"></select></div>
+        <div class="row"><div class="grow tiny muted" id="presetCalories">Estimated: 144 kcal</div><button id="addPreset">＋ Add</button></div>
+        <hr style="border:0;border-top:1px solid #edf0e8;margin:18px 0">
+        <h3 style="margin:0 0 6px;font-size:1rem">Describe your meal</h3>
+        <div class="field"><label for="foodDescription">Food or meal details</label><textarea id="foodDescription" placeholder="e.g. 2 eggs, avocado toast, and an iced latte"></textarea></div>
+        <div class="field"><label for="mealType">Meal</label><select id="mealType"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option></select></div>
+        <div class="field"><label for="mealCalories">Approximate calories for this meal</label><input id="mealCalories" type="number" min="0" inputmode="numeric" value="300"></div>
+        <div class="row"><button class="secondary grow" id="estimateText" type="button">Estimate from text</button><button class="grow" id="addMeal" type="button">Add meal</button></div>
+        <p class="tiny muted">Text estimates use simple rules for common foods and may miss portion sizes, ingredients, sauces, and oils. Review and adjust the number before adding.</p>
+      </div>
+      <div class="card" style="margin-top:10px" id="foodListWrap"><div id="foodList"></div><div class="row" style="justify-content:space-between;margin-top:10px"><strong>Total intake</strong><strong id="foodListTotal">0 kcal</strong></div></div>
+    </section>
+
+    <section class="section">
+      <div class="section-title"><h2>Weight, without the pressure</h2></div>
+      <div class="card">
+        <p class="muted tiny" style="margin-top:0">Optional check-ins help you observe trends over weeks. Daily changes are normal and can reflect water, digestion, and other factors.</p>
+        <div class="row"><div class="field grow"><label for="weightInput">Weight (lb)</label><input id="weightInput" type="number" min="1" step="0.1" inputmode="decimal" placeholder="e.g. 150.2"></div><div style="padding-top:10px"><button id="addWeight">Save entry</button></div></div>
+        <div id="weightSummary" class="notice hidden"></div>
+        <div id="weightList" class="weight-list"></div>
+      </div>
+    </section>
+    <section class="section"><div class="notice">📱 <strong>Apple Health:</strong> This web app cannot directly read Health data. Enter steps manually for now. A native iOS app with HealthKit permissions would be needed for automatic syncing.</div></section>
+  </main>
+
+  <main id="insightsView" class="hidden">
+    <section class="section"><div class="section-title"><h2>Your insights</h2></div><div class="card">
+      <div class="grid"><div class="notice"><div class="tiny">Food entries today</div><div class="balance-number" id="insightFoodCount">0</div></div><div class="notice"><div class="tiny">Weight entries</div><div class="balance-number" id="insightWeightCount">0</div></div></div>
+      <h3>What to watch for</h3><p class="muted">Consistent habits and changes in average weight over several weeks are more informative than one day's estimated calorie balance. This prototype saves your data on this device, but does not yet provide a full multi-day chart.</p>
+      <button class="secondary" id="exportData">Export my data (JSON)</button> <button class="secondary" id="resetData">Clear all data</button>
+    </div></section>
+  </main>
+
+  <nav class="tabbar" aria-label="Main navigation"><button class="active" data-tab="today">Today</button><button data-tab="insights">Insights</button></nav>
+  <div class="status" role="status" aria-live="polite" id="statusMessage"></div>
+  <footer class="footer">Made for balance, not perfection · Estimates only</footer>
+</div>
+<script>
+const KEY='dailyBalance.v1';
+const todayKey=()=>new Date().toLocaleDateString('en-CA');
+const defaultState=()=>({days:{},weights:[],baseline:1800});
+let state=loadState();
+function loadState(){try{return Object.assign(defaultState(),JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return defaultState()}}
+function saveState(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){message('Could not save locally. Check your browser storage settings.');}}
+function currentDay(){const k=todayKey();if(!state.days[k])state.days[k]={foods:[],steps:0,exercise:0};return state.days[k]}
+function message(s){document.getElementById('statusMessage').textContent=s}
+const presets=[
+['Eggs, 2 large',144],['Chicken breast, cooked (4 oz)',187],['Cooked white rice (1 cup)',205],['Avocado (half)',120],['Banana, medium',105],['Greek yogurt, plain (170 g)',100],['Oatmeal, cooked (1 cup)',154],['Latte, 12 oz',180],['Pizza, 1 slice',285],['Salmon, cooked (4 oz)',233],['Mixed salad with dressing',220],['Apple, medium',95],['Peanut butter (2 tbsp)',190],['Black coffee',5],['Protein shake',200],['Pasta with tomato sauce (1 bowl)',350]
+];
+const $=id=>document.getElementById(id);
+function estimateText(s){const t=s.toLowerCase();let n=0;const count=(re,fallback=1)=>Number((t.match(re)||[])[0])||fallback;
+if(/egg/.test(t))n+=75*count(/\d+/);if(/toast|bread/.test(t))n+=100;if(/avocado/.test(t))n+=120;if(/chicken/.test(t))n+=200;if(/rice/.test(t))n+=200;if(/salad/.test(t))n+=180;if(/pizza/.test(t))n+=285;if(/burger/.test(t))n+=500;if(/fries/.test(t))n+=350;if(/latte|coffee/.test(t))n+=120;if(/banana/.test(t))n+=105;if(/apple/.test(t))n+=95;if(/yogurt/.test(t))n+=130;if(/oatmeal|oats/.test(t))n+=155;if(/salmon/.test(t))n+=230;if(/pasta/.test(t))n+=350;if(/sandwich/.test(t))n+=400;if(/soup/.test(t))n+=180;if(/cookie/.test(t))n+=150;if(/protein shake/.test(t))n+=200;
+return n||300}
+function fmt(n){return Math.round(n).toLocaleString()}
+function render(){
+const d=currentDay(), intake=d.foods.reduce((s,f)=>s+f.cal,0), steps=Math.max(0,+d.steps||0), exercise=Math.max(0,+d.exercise||0), baseline=Math.max(0,+state.baseline||0);
+const stepBurn=Math.round(steps*.04), totalBurn=baseline+stepBurn+exercise, balance=intake-totalBurn;
+$('todayDate').textContent=new Date().toLocaleDateString(undefined,{month:'short',day:'numeric'});
+$('intakeTotal').textContent=fmt(intake);$('intakeBar').style.width=Math.min(100,intake/2000*100)+'%';
+$('stepsDisplay').textContent=fmt(steps);$('exerciseDisplay').textContent=fmt(exercise);
+$('stepsInput').value=d.steps||'';$('exerciseInput').value=d.exercise||'';$('baselineInput').value=state.baseline;
+$('balanceNumber').textContent=(balance>0?'+':'')+fmt(balance);$('balanceLabel').textContent=balance>0?'kcal above estimated burn':balance<0?'kcal below estimated burn':'kcal difference';
+$('burnLine').textContent=`Estimated total burn: ${fmt(totalBurn)} kcal (baseline ${fmt(baseline)} + estimated step burn ${fmt(stepBurn)} + exercise ${fmt(exercise)})`;
+$('foodCount').textContent=d.foods.length+' item'+(d.foods.length===1?'':'s');$('foodListTotal').textContent=fmt(intake)+' kcal';
+$('foodList').innerHTML=d.foods.length?d.foods.map(f=>`<div class="food-item"><div class="food-icon">🥣</div><div class="food-info"><strong>${esc(f.name)}</strong><small>${esc(f.meal)} · estimated</small></div><div class="food-kcal">${fmt(f.cal)} kcal<button class="small secondary" data-remove="${f.id}" type="button">Remove</button></div></div>`).join(''):'<div class="empty"><strong>Your diary starts here</strong>Add your first meal to see your intake update.</div>';
+$('weightList').innerHTML=state.weights.length?state.weights.slice().reverse().map(w=>`<div class="weight-row"><span class="muted">${esc(w.date)}</span><strong>${Number(w.value).toFixed(1)} lb</strong></div>`).join(''):'<p class="muted tiny">Your weight entries will appear here.</p>';
+$('weightSummary').classList.toggle('hidden',state.weights.length<2);
+if(state.weights.length>1){let delta=state.weights[state.weights.length-1].value-state.weights[0].value;$('weightSummary').textContent=`Change since first entry: ${delta>0?'+':''}${delta.toFixed(1)} lb. This simple comparison is not yet a meaningful long-term trend.`}
+$('insightFoodCount').textContent=d.foods.length;$('insightWeightCount').textContent=state.weights.length;
+saveState();
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function addFood(name,cal,meal){const d=currentDay();d.foods.push({id:Date.now()+Math.random(),name,cal:Math.max(0,Math.round(+cal||0)),meal});render();message('Added to your food diary.')}
+const select=$('foodSearch');presets.forEach((p,i)=>{let o=document.createElement('option');o.value=i;o.textContent=p[0];select.append(o)});
+function updatePreset(){const p=presets[+select.value]||presets[0];$('presetCalories').textContent='Estimated: '+p[1]+' kcal'}select.addEventListener('change',updatePreset);updatePreset();
+$('addPreset').addEventListener('click',()=>{const p=presets[+select.value]||presets[0];addFood(p[0],p[1],$('mealType').value)});
+$('estimateText').addEventListener('click',()=>{const t=$('foodDescription').value.trim();if(!t)return message('Describe a food or meal first.');$('mealCalories').value=estimateText(t);message('Rough estimate filled in. Review it before adding.')});
+$('addMeal').addEventListener('click',()=>{const t=$('foodDescription').value.trim(),c=$('mealCalories').value;if(!t)return message('Describe your meal first.');if(c===''||+c<0)return message('Enter a valid calorie estimate.');addFood(t,+c,$('mealType').value);$('foodDescription').value='';});
+$('stepsInput').addEventListener('change',e=>{currentDay().steps=Math.max(0,+e.target.value||0);render()});
+$('exerciseInput').addEventListener('change',e=>{currentDay().exercise=Math.max(0,+e.target.value||0);render()});
+$('baselineInput').addEventListener('change',e=>{state.baseline=Math.max(0,+e.target.value||0);render();message('Baseline estimate updated.')});
+$('settingsToggle').addEventListener('click',()=>{$('settingsPanel').classList.toggle('hidden')});
+$('foodList').addEventListener('click',e=>{const id=e.target.dataset.remove;if(id){currentDay().foods=currentDay().foods.filter(f=>String(f.id)!==id);render();message('Food entry removed.')}});
+$('addWeight').addEventListener('click',()=>{const v=+$('weightInput').value;if(!(v>0))return message('Enter a valid weight first.');state.weights.push({value:v,date:new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})});$('weightInput').value='';render();message('Weight entry saved on this device.')});
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{const insights=b.dataset.tab==='insights';$('todayView').classList.toggle('hidden',insights);$('insightsView').classList.toggle('hidden',!insights);document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b))}));
+$('exportData').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='daily-balance-data.json';a.click();URL.revokeObjectURL(url);message('Data export prepared.')});
+$('resetData').addEventListener('click',()=>{if(confirm('Clear all Daily Balance food, activity, and weight data saved on this device?')){state=defaultState();render();message('Local data cleared.')}});
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
